@@ -46,14 +46,45 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
+import org.w3c.dom.NodeList
 import si.uni_lj.fe.mis.tobeeornottobee.R
-
+import javax.xml.parsers.DocumentBuilderFactory
+import androidx.compose.ui.unit.sp
+import org.w3c.dom.Element
 @Composable
 fun HomeScreen(navController: NavHostController, paddingValues: PaddingValues) {
+    // Load and parse the XML file containing fun facts
+    val funFacts = parseFunFacts()
 
+    // Display a random fun fact
+    val randomFact = funFacts.random()
 
-MyHiveItem()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // Display the hive item inside a Card
+        Card(Modifier.padding(bottom = 8.dp)) {
+            MyHiveItem()
+        }
 
+        // Display the random fun fact inside a Card
+        Card(Modifier.padding(bottom = 8.dp)) {
+            Column(Modifier.padding(16.dp)) {
+                Text(
+                    text = "Fun Fact:",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    fontSize = 20.sp,
+                )
+                Text(
+                    text = randomFact,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    fontSize = 18.sp,
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -179,6 +210,32 @@ fun GifImage(
 }
 
 
+// Function to parse the XML file containing fun facts
+@Composable
+private fun parseFunFacts(): List<String> {
+    val funFactsList = remember { mutableStateOf<List<String>>(emptyList()) }
+
+    val inputStream = LocalContext.current.resources.openRawResource(R.raw.fun_facts)
+
+    val factory = DocumentBuilderFactory.newInstance()
+    val builder = factory.newDocumentBuilder()
+    val doc = builder.parse(inputStream)
+    val nodeList: NodeList = doc.getElementsByTagName("fact")
+
+    val parsedFunFacts = mutableListOf<String>()
+
+    for (i in 0 until nodeList.length) {
+        val node = nodeList.item(i) as Element
+        val title = node.getElementsByTagName("title").item(0).textContent
+        val description = node.getElementsByTagName("description").item(0).textContent
+        val fact = "$title: $description"
+        parsedFunFacts.add(fact)
+    }
+
+    funFactsList.value = parsedFunFacts
+
+    return funFactsList.value
+}
 
 
 @Preview(showBackground = true, showSystemUi = true)
