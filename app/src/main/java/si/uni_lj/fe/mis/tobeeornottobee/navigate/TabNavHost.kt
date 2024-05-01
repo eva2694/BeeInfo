@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -36,6 +37,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.screens.HomeScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.QuizScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.HiveScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.cmera.AddQrScanScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.list.AddHiveScreen
@@ -49,6 +51,7 @@ sealed class TabNavRote(val rote: String){
     object AddQrScanScreen: TabNavRote("add_qr_scan_screen")
 
     object HiveScreen: TabNavRote("hive_screen")
+    object QuizScreen: TabNavRote("quiz_screen")
 
 
 
@@ -124,8 +127,22 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                     contentDescription = ""
                 ) },
                     label = { Text(text = "about us")})
+
+                Spacer(Modifier.weight(1f, true))
+
+                NavigationBarItem(
+                    selected = selectedBottomTab == 3,
+                    onClick = {
+                        topBarState = false
+                        selectedBottomTab = 3
+                        inTabNavigation.navigate(TabNavRote.QuizScreen.rote)
+                    },
+                    icon = { Icon(Icons.Filled.Star, contentDescription = "") },
+                    label = { Text(text = "Quiz") }
+                )
             }
         },
+
         floatingActionButton = {
             Box() {
                 FloatingActionButton(
@@ -139,7 +156,7 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(80.dp)
-                        .offset(y = 50.dp)
+                        .offset(y = 10.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -172,6 +189,10 @@ fun TabNavHost(inTabNavigation: NavHostController) {
             composable(route = TabNavRote.HiveScreen.rote) {
                 HiveScreen(inTabNavigation,paddingValues)
             }
+            composable(route = TabNavRote.QuizScreen.rote) {
+                QuizScreen(inTabNavigation)
+            }
+
 
 
         }
