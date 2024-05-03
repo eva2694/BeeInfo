@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,8 +39,9 @@ import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.screens.HomeScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.HiveScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.cmera.AddQrScanScreen
-import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.list.AddHiveScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.list.AddHiveListScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.map.MapMainScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.funFactScreen.FunFactsScreen
 
 sealed class TabNavRote(val rote: String){
 
@@ -50,6 +52,9 @@ sealed class TabNavRote(val rote: String){
 
     object HiveScreen: TabNavRote("hive_screen")
 
+    object FunFactsScreen: TabNavRote("fun_facts_screen")
+
+
 
 
 }
@@ -58,12 +63,12 @@ sealed class TabNavRote(val rote: String){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabNavHost(inTabNavigation: NavHostController) {
-    val vm : MainViewModel
+    val vm : MainViewModel = hiltViewModel()
     var selectedBottomTab by remember {
         mutableStateOf(1)
     }
     var selectedTopTab by remember {
-        mutableStateOf(1)
+        mutableStateOf(0)
     }
     var topBarState by remember {
         mutableStateOf(false)
@@ -117,13 +122,14 @@ fun TabNavHost(inTabNavigation: NavHostController) {
 
                 NavigationBarItem(selected = selectedBottomTab==2, onClick = {
                     topBarState = false
-
                     selectedBottomTab=2
-                                                                       }, icon = { Icon(
+                    inTabNavigation.navigate(TabNavRote.FunFactsScreen.rote)
+
+                }, icon = { Icon(
                     Icons.Filled.Info,
                     contentDescription = ""
                 ) },
-                    label = { Text(text = "about us")})
+                    label = { Text(text = "fun facts")})
             }
         },
         floatingActionButton = {
@@ -131,6 +137,7 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                 FloatingActionButton(
                     onClick = {
                         selectedBottomTab =3
+                        selectedTopTab = 1
                         topBarState = true
                         inTabNavigation.navigate(TabNavRote.AddMapScreen.rote)
 
@@ -158,19 +165,22 @@ fun TabNavHost(inTabNavigation: NavHostController) {
 
         NavHost(navController = inTabNavigation, startDestination = TabNavRote.HomeScreen.rote) {
             composable(route = TabNavRote.HomeScreen.rote) {
-                HomeScreen(inTabNavigation, paddingValues)
+                HomeScreen(inTabNavigation, paddingValues, vm)
             }
             composable(route = TabNavRote.AddMapScreen.rote) {
-                MapMainScreen(inTabNavigation,paddingValues)
+                MapMainScreen(inTabNavigation,paddingValues, vm)
             }
             composable(route = TabNavRote.AddListScreen.rote) {
-                AddHiveScreen(inTabNavigation,paddingValues)
+                AddHiveListScreen(inTabNavigation,paddingValues, vm)
             }
             composable(route = TabNavRote.AddQrScanScreen.rote) {
                 AddQrScanScreen(inTabNavigation,paddingValues)
             }
             composable(route = TabNavRote.HiveScreen.rote) {
-                HiveScreen(inTabNavigation,paddingValues)
+                HiveScreen(inTabNavigation,paddingValues, vm)
+            }
+            composable(route = TabNavRote.FunFactsScreen.rote) {
+                FunFactsScreen()
             }
 
 
