@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.cmera
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.cmera
 
 import android.content.Context
 import android.hardware.camera2.CameraManager

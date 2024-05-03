@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.map
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.map
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

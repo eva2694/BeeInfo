@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -38,10 +38,11 @@ import androidx.navigation.compose.composable
 import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.screens.HomeScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.HiveScreen
-import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.cmera.AddQrScanScreen
-import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.list.AddHiveListScreen
-import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.map.MapMainScreen
-import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.funFactScreen.FunFactsScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.cmera.AddQrScanScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.list.AddHiveListScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.map.MapMainScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.funFactScreen.FunFactsScreen
+import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.quiz.QuizScreen
 
 sealed class TabNavRote(val rote: String){
 
@@ -53,6 +54,7 @@ sealed class TabNavRote(val rote: String){
     object HiveScreen: TabNavRote("hive_screen")
 
     object FunFactsScreen: TabNavRote("fun_facts_screen")
+    object QuizScreen: TabNavRote("quiz_screen")
 
 
 
@@ -126,10 +128,10 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                     inTabNavigation.navigate(TabNavRote.FunFactsScreen.rote)
 
                 }, icon = { Icon(
-                    Icons.Filled.Info,
+                    Icons.Default.Star,
                     contentDescription = ""
                 ) },
-                    label = { Text(text = "fun facts")})
+                    label = { Text(text = "study")})
             }
         },
         floatingActionButton = {
@@ -180,8 +182,12 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                 HiveScreen(inTabNavigation,paddingValues, vm)
             }
             composable(route = TabNavRote.FunFactsScreen.rote) {
-                FunFactsScreen()
+                FunFactsScreen(inTabNavigation,paddingValues)
             }
+            composable(route = TabNavRote.QuizScreen.rote) {
+                QuizScreen(inTabNavigation,paddingValues)
+            }
+
 
 
         }

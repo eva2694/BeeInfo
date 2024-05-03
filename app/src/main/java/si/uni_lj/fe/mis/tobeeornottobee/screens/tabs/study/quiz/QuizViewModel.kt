@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.di
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.quiz
 
 import androidx.lifecycle.ViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.model.Question

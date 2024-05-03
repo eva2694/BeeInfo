@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.list
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.list
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding

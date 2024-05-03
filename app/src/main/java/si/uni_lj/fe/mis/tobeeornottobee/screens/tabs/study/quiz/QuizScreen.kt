@@ -1,10 +1,20 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.quiz
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,10 +37,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import si.uni_lj.fe.mis.tobeeornottobee.R
-import si.uni_lj.fe.mis.tobeeornottobee.di.QuizViewModel
+import si.uni_lj.fe.mis.tobeeornottobee.navigate.TabNavRote
 
 @Composable
-fun QuizScreen(navController: NavHostController) {
+fun QuizScreen(navController: NavHostController,
+               paddingValues: PaddingValues) {
     val viewModel = viewModel<QuizViewModel>()
 
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
@@ -53,7 +64,7 @@ fun QuizScreen(navController: NavHostController) {
             text = currentQuestion.text,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -146,6 +157,15 @@ fun QuizScreen(navController: NavHostController) {
             }
         }
     }
+    Column(
+        Modifier.fillMaxSize().padding(paddingValues),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.Start) {
+        Button(
+            onClick = { navController.navigate(TabNavRote.FunFactsScreen.rote) }) {
+            Text(text = "go to Facts")
+        }
+    }
 
 
 
@@ -157,5 +177,5 @@ fun QuizScreen(navController: NavHostController) {
 @Composable
 fun QuizScreenPreview() {
     val navController = rememberNavController()
-    QuizScreen(navController = navController)
+    QuizScreen(navController = navController, PaddingValues())
 }

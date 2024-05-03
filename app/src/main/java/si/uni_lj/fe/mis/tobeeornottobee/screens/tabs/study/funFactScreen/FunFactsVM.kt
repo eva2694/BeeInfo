@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.funFactScreen
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.funFactScreen
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

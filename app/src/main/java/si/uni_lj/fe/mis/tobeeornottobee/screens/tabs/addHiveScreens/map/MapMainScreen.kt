@@ -1,4 +1,4 @@
-package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreen.map
+package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.map
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +11,7 @@ import si.uni_lj.fe.mis.tobeeornottobee.model.hives.room.HiveDbEntity
 
 @Composable
 fun MapMainScreen(navController: NavHostController, paddingValues: PaddingValues, vm: MainViewModel) {
-
+    if (vm.allHives.value?.isEmpty()==true)
     for ( i in 1..5)
         vm.addHive(
             HiveDbEntity(
