@@ -1,90 +1,91 @@
+
 <fun-facts>
     <fact>
-        <title>Število vrst</title>
-        <description>Na svetu je približno 20.000 vrst čebel</description>
+        <title>Number of Species</title>
+        <description>There are approximately 20,000 species of bees in the world</description>
     </fact>
     <fact>
-        <title>Pikanje</title>
-        <description>Samo samice čebel pikajo</description>
+        <title>Stinging</title>
+        <description>Only female bees sting</description>
     </fact>
     <fact>
-        <title>Barvni pogled</title>
-        <description>čebele vidijo vse barve, razen rdeče</description>
+        <title>Color Vision</title>
+        <description>Bees can see all colors except red</description>
     </fact>
     <fact>
-        <title>Najljubša hrana</title>
-        <description>Njihov najljubši vir hrane je cvetni prah</description>
+        <title>Favorite Food</title>
+        <description>Their favorite food source is pollen</description>
     </fact>
     <fact>
-        <title>Iskanje prahu</title>
-        <description>Cvetni prah najdejo s pomočjo vida in vonja</description>
+        <title>Pollen Retrieval</title>
+        <description>Bees find pollen using their sight and sense of smell</description>
     </fact>
     <fact>
-        <title>Kako prenašajo prah</title>
-        <description>Cvetni prah prenašajo na nogah ter po telesu, na dlačicah, iz cveta na cvet</description>
+        <title>How Pollen is Carried</title>
+        <description>They carry pollen on their legs and bodies, on hairs, from flower to flower</description>
     </fact>
     <fact>
-        <title>Opraševanje</title>
-        <description>Ko čebela leti, lahko spusti cvetni prah, kar opraši rastline in jim pomaga pri rasti</description>
+        <title>Pollination</title>
+        <description>When bees fly, they can drop pollen, which pollinates plants and helps them grow</description>
     </fact>
     <fact>
-        <title>Proizvodnja medu</title>
-        <description>Medonosne čebele proizvajajo med, da ga jedo med zimo, jemo pa ga tudi ljudje</description>
+        <title>Honey Production</title>
+        <description>Honeybees produce honey, which they eat during the winter, and humans also consume it</description>
     </fact>
     <fact>
-        <title>Brenčanje</title>
-        <description>Brenčanje okoli čebel nastane zaradi njihovega hitrega prhutanja s krili - nekaj 1000x na minuto</description>
+        <title>Buzzing</title>
+        <description>Buzzing around bees is due to their rapid wing flapping - a few thousand times per minute</description>
     </fact>
     <fact>
         <title>Chainsmokers</title>
-        <description>Dim pomirja čebele. Čebelarji ga uporabljajo za pobiranje medu in premik panja</description>
+        <description>Smoke calms bees. Beekeepers use it for honey collection and hive movement</description>
     </fact>
     <fact>
-        <title>Populacija panja</title>
-        <description>V panju živijo kraljica matica, čebele delavke in troti. Matica in delavke so samice, medtem ko so troti samci</description>
+        <title>Hive Population</title>
+        <description>The hive consists of a queen bee, worker bees, and drones. The queen and workers are females, while drones are males</description>
     </fact>
     <fact>
-        <title>Naloge trota</title>
-        <description>Edina naloga trota je, da oplodi matico</description>
+        <title>Drone's Duty</title>
+        <description>The only task of a drone is to mate with the queen</description>
     </fact>
     <fact>
-        <title>Hitrost leta</title>
-        <description>Čebele zmorejo leteti s hitrostjo do 24 km/h</description>
+        <title>Flight Speed</title>
+        <description>Bees can fly at speeds up to 24 km/h</description>
     </fact>
     <fact>
-        <title>Vonjave cvetov</title>
-        <description>Čebele lahko prepoznajo različne vonjave cvetov in se z njimi orientirajo med iskanjem hrane</description>
+        <title>Flower Scents</title>
+        <description>Bees can recognize different scents of flowers and use them to navigate while foraging</description>
     </fact>
     <fact>
-        <title>Izdelava satovja</title>
-        <description>Čebele izdelujejo satovje iz voska, ki ga pridobijo iz posebnih žlez na svojem telesu</description>
+        <title>Comb Construction</title>
+        <description>Bees construct combs from wax obtained from special glands on their bodies</description>
     </fact>
     <fact>
-        <title>Čebelji ples</title>
-        <description>Čebele uporabljajo ples, imenovan čebelji ples, da sporočajo drugim čebelam, kje je najti najboljši nektar</description>
+        <title>Bee Dance</title>
+        <description>Bees use a dance, called the waggle dance, to communicate to other bees where to find the best nectar</description>
     </fact>
     <fact>
-        <title>Čebelji strup</title>
-        <description>Čebele so znane tudi po svojem strupu, ki ga uporabljajo za obrambo pred sovražniki</description>
+        <title>Bee Venom</title>
+        <description>Bees are also known for their venom, which they use for defense against enemies</description>
     </fact>
     <fact>
-        <title>Raznične vrste medu</title>
-        <description>Medonosne čebele izdelujejo različne vrste medu, odvisno od vrste cvetja, ki ga obiskujejo</description>
+        <title>Diverse Honey Types</title>
+        <description>Honeybees produce different types of honey depending on the type of flowers they visit</description>
     </fact>
     <fact>
-        <title>Prilagodljivost</title>
-        <description>Čebele so izjemno prilagodljive in se lahko prilagodijo različnim okoljem ter se uspešno znajdejo v različnih podnebjih</description>
+        <title>Adaptability</title>
+        <description>Bees are extremely adaptable and can adjust to various environments, successfully thriving in different climates</description>
     </fact>
     <fact>
-        <title>Pot med hrano in panjem</title>
-        <description>Čebele lahko izračunajo optimalno pot med različnimi viri hrane in panjem ter se vedno vrnejo po najkrajši poti</description>
+        <title>Route Optimization</title>
+        <description>Bees can calculate the optimal route between different food sources and the hive, always returning by the shortest path</description>
     </fact>
     <fact>
-        <title>Ultravijolični vid</title>
-        <description>Čebele lahko zaznajo ultravijolično svetlobo, kar jim omogoča, da bolje vidijo cvetne vzorce in oprašujejo rastline</description>
+        <title>Ultraviolet Vision</title>
+        <description>Bees can detect ultraviolet light, allowing them to better see floral patterns and pollinate plants</description>
     </fact>
     <fact>
-        <title>Pomen čebel</title>
-        <description>Čebele so ključnega pomena za ohranjanje biotske raznovrstnosti, saj pomagajo pri opraševanju številnih divjih rastlin in ohranjajo ekosisteme v ravnotežju</description>
+        <title>Importance of Bees</title>
+        <description>Bees are crucial for maintaining biodiversity as they assist in the pollination of numerous wild plants and keep ecosystems balanced</description>
     </fact>
 </fun-facts>
