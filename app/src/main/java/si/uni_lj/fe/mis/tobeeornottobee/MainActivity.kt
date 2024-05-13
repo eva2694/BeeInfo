@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import si.uni_lj.fe.mis.tobeeornottobee.navigate.AppNavHost
 import si.uni_lj.fe.mis.tobeeornottobee.ui.theme.ToBeeOrNotToBeeTheme
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 

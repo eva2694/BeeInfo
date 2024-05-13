@@ -1,5 +1,6 @@
 package si.uni_lj.fe.mis.tobeeornottobee
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
+@SuppressLint("CustomSplashScreen")
 class MainViewModel @Inject
 constructor(
     val roomDB: AppDatabase

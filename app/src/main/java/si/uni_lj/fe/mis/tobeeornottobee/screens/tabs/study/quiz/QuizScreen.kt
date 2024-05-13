@@ -37,7 +37,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import si.uni_lj.fe.mis.tobeeornottobee.R
-import si.uni_lj.fe.mis.tobeeornottobee.navigate.TabNavRote
 
 @Composable
 fun QuizScreen(navController: NavHostController,
@@ -157,15 +156,15 @@ fun QuizScreen(navController: NavHostController,
             }
         }
     }
-    Column(
-        Modifier.fillMaxSize().padding(paddingValues),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.Start) {
-        Button(
-            onClick = { navController.navigate(TabNavRote.FunFactsScreen.rote) }) {
-            Text(text = "go to Facts")
-        }
-    }
+//    Column(
+//        Modifier.fillMaxSize().padding(paddingValues),
+//        verticalArrangement = Arrangement.Bottom,
+//        horizontalAlignment = Alignment.Start) {
+//        Button(
+//            onClick = { navController.navigate(TabNavRote.FunFactsScreen.rote) }) {
+//            Text(text = "go to Facts")
+//        }
+//    }
 
 
 
