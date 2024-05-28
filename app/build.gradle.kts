@@ -66,7 +66,12 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
 
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     //grafic
     implementation("co.yml:ycharts:2.1.0")
     //
@@ -83,6 +88,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 //coil
+    implementation ("com.google.accompanist:accompanist-drawablepainter:0.32.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("io.coil-kt:coil-gif:2.1.0")
     //coil

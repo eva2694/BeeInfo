@@ -1,9 +1,11 @@
 package si.uni_lj.fe.mis.tobeeornottobee
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
@@ -18,6 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import si.uni_lj.fe.mis.tobeeornottobee.data.retrofit.ClientData
+import si.uni_lj.fe.mis.tobeeornottobee.data.retrofit.RetrofitInstance
 import si.uni_lj.fe.mis.tobeeornottobee.navigate.AppNavHost
 import si.uni_lj.fe.mis.tobeeornottobee.ui.theme.ToBeeOrNotToBeeTheme
 
@@ -29,6 +35,24 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        toast("kd")
+        kotlinx.coroutines.GlobalScope.launch(Dispatchers.Main) {
+            try {
+                // Fetch data from the API
+                val clientData = RetrofitInstance.api.getClientData()
+                // Handle the fetched data
+                handleClientData(clientData)
+            } catch (e: Exception) {
+                // Handle exceptions, such as network errors
+                e.printStackTrace()
+            }        }
+
+       val sharedPreferences = getSharedPreferences(getString(R.string.login_time_sharedPreference),Context.MODE_PRIVATE)
+            val savedTime = sharedPreferences.getLong("time", Long.MAX_VALUE)
+            val currentTime = System.currentTimeMillis()
+        if (currentTime<savedTime)
+            sharedPreferences.edit().putLong("time", currentTime).apply()
+
         checkPermissions()
         setContent {
             ToBeeOrNotToBeeTheme {
@@ -48,6 +72,16 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    private fun handleClientData(clientData: ClientData) {
+        toast(clientData.toString())
+    }
+
+
+
+
+    private fun Context.toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
 
     private fun checkPermissions(){
         if (!checkBtPermission()){

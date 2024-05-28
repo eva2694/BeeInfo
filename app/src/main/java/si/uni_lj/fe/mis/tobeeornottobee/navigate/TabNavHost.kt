@@ -191,7 +191,7 @@ fun TabNavHost(inTabNavigation: NavHostController) {
             }
 
             composable(route = TabNavRote.ProfileScreen.rote) {
-                ProfileScreen()
+                ProfileScreen(vm, inTabNavigation,paddingValues)
             }
 
 

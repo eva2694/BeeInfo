@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ToBeeOrNotToBee</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="login_time_sharedPreference">login_time</string>
 </resources>

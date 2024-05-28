@@ -1,7 +1,10 @@
 package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.profile
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,47 +19,64 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.R
 import si.uni_lj.fe.mis.tobeeornottobee.model.hives.room.HiveDbEntity
+import si.uni_lj.fe.mis.tobeeornottobee.navigate.TabNavRote
+import java.util.concurrent.TimeUnit
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(vm: MainViewModel, inTabNavigation: NavHostController, paddingValues: PaddingValues) {
 
-    val user= User("some",1,3,
+    val hives = vm.allHives.observeAsState()
+
+    val sharedPreferences = (LocalContext.current as (Activity)).getSharedPreferences(
+        stringResource(R.string.login_time_sharedPreference),
+        Context.MODE_PRIVATE)
+    val savedTime = sharedPreferences.getLong("time", Long.MAX_VALUE)
+
+    val user= User("some",1,TimeUnit.MICROSECONDS.toDays(System.currentTimeMillis() - savedTime).toString(),
         achievements = listOf(
             Achievement("streak","1 week"),
             Achievement("streak","1 week"),
         Achievement("streak","1 week"),
-    Achievement("streak","1 week")),hives = listOf(
-        HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
+    Achievement("streak","1 week")),
+        hives = hives.value?: listOf()
+//        hives = listOf(
+//        HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//
+//            HiveDbEntity(name = "name"),
+//
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),
+//            HiveDbEntity(name = "name"),)
 
-            HiveDbEntity(name = "name"),
 
-            HiveDbEntity(name = "name"),
-
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-            HiveDbEntity(name = "name"),
-
-
-    ))
+    )
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -83,7 +103,7 @@ fun ProfileScreen() {
             text = "My Hives:",
             style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(8.dp))
-        HivesGrid(user.hives)
+        HivesGrid(user.hives, inTabNavigation, vm)
     }
 }
 
@@ -120,7 +140,9 @@ fun AchievementsList(achievements: List<Achievement>) {
 @Composable
 fun AchievementItem(achievement: Achievement) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(26.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(26.dp),
 
     ) {
         Column {
@@ -138,22 +160,28 @@ fun AchievementItem(achievement: Achievement) {
 }
 
 @Composable
-fun HivesGrid(hives: List<HiveDbEntity>) {
+fun HivesGrid(hives: List<HiveDbEntity>, inTabNavigation: NavHostController, vm: MainViewModel) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 128.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(hives) { hive ->
-            HiveItem(hive)
+        items(hives+hives) { hive ->
+            HiveItem(hive, inTabNavigation, vm)
         }
     }
 }
 
 @Composable
-fun HiveItem(hive: HiveDbEntity) {
+fun HiveItem(hive: HiveDbEntity, inTabNavigation: NavHostController, vm: MainViewModel) {
     Card(
-        modifier = Modifier.fillMaxWidth(0.5f).padding(16.dp),
+        modifier = Modifier
+            .fillMaxWidth(0.5f)
+            .padding(7.dp)
+            , onClick = {
+                vm.currentHive.value = hive
+                inTabNavigation.navigate(TabNavRote.HiveScreen.rote)
+        }
     ) {
         Column {
             Text(
@@ -169,7 +197,7 @@ fun HiveItem(hive: HiveDbEntity) {
 data class User(
     val name: String,
     val level: Int,
-    val streak: Int,
+    val streak: String,
     val achievements: List<Achievement>,
     val hives: List<HiveDbEntity>
 )
@@ -182,5 +210,5 @@ data class Achievement(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ProfileScreenPrev() {
-    ProfileScreen()
+    //ProfileScreen(vm)
 }
