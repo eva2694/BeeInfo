@@ -19,12 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import si.uni_lj.fe.mis.tobeeornottobee.R
 import si.uni_lj.fe.mis.tobeeornottobee.model.hives.room.HiveDbEntity
 
 
@@ -42,21 +39,16 @@ fun MyHiveItem(
             Modifier
                 .fillMaxWidth()
                 .padding(3.dp), verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(0.3f)) {
-                AsyncImage(
 
-                    model = hive.imageURL,
-                    placeholder = painterResource(id = R.drawable.ic_launcher_background),
-                    error = painterResource(id = R.drawable.ic_android_black_24dp),
-                    contentDescription = "The delasign logo",
-                )
-
-            }
             Column(Modifier.weight(0.7f), horizontalAlignment = Alignment.End) {
-                Row(Modifier.fillMaxWidth(),
+                Row {
+                Row(Modifier.fillMaxWidth().weight(0.5f, fill = true),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(text = hive.name, fontSize = 20.sp)
+                    horizontalArrangement = Arrangement.Center) {
+                    Text(text = hive.name, fontSize = 20.sp)}
+                Row(Modifier.fillMaxWidth().weight(0.15f, fill = false),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End) {
                     if (!isMyHiveScreen){
                    Column(Modifier.height(IntrinsicSize.Min)) {
                        IconButton(
@@ -80,13 +72,14 @@ fun MyHiveItem(
                        }
 
                        if (hive.isCollect)
-                           Text(text = "collected")
-                       else Text(text = "collect")
+                           Text(text = "collected", maxLines = 1)
+                       else Text(text = "collect", maxLines = 1)
                    }
                    }
 
 
                 }
+                    }
 
 
 

@@ -2,6 +2,7 @@ package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.quiz
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -50,7 +51,7 @@ fun QuizScreen(navController: NavHostController,
     var userAnswer by remember { mutableStateOf<Int?>(null) }
     var showDialog by remember { mutableStateOf(false) }
     var score by remember { mutableIntStateOf(0) }
-
+Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,7 +73,7 @@ fun QuizScreen(navController: NavHostController,
             painter = painterResource(id = R.drawable.placeholder_image),
             contentDescription = "Bee Image",
             modifier = Modifier
-                .size(330.dp)
+                .size(200.dp)
                 .clip(RoundedCornerShape(16.dp))
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -80,7 +81,7 @@ fun QuizScreen(navController: NavHostController,
 
         // Display answer options
         currentQuestion.options.forEachIndexed { index, option ->
-            val buttonColor  = if (userAnswer == index) {
+            val buttonColor = if (userAnswer == index) {
                 if (index == currentQuestion.correctIx) {
                     Color.Green
                 } else Color.Red
@@ -156,6 +157,7 @@ fun QuizScreen(navController: NavHostController,
             }
         }
     }
+}
 //    Column(
 //        Modifier.fillMaxSize().padding(paddingValues),
 //        verticalArrangement = Arrangement.Bottom,

@@ -3,11 +3,18 @@ package si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.map
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.rememberCameraPositionState
 import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.model.hives.room.HiveDbEntity
+import si.uni_lj.fe.mis.tobeeornottobee.screens.items.MyHiveItem
 
 @Composable
 fun MapMainScreen(navController: NavHostController, paddingValues: PaddingValues, vm: MainViewModel) {
@@ -26,11 +33,36 @@ fun MapMainScreen(navController: NavHostController, paddingValues: PaddingValues
             isCollect = false,
             voc = 0)
         )
+    val singapore = LatLng(/* latitude = */ 1.35,  /* longitude = */ 103.87)
+
+    var selectLocation = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(singapore, 2f)
+    }
+
    Column(Modifier.padding(paddingValues = paddingValues)) {
-       MyMap(Modifier.weight(0.5f), vm)
+       MyMap(Modifier.weight(0.5f), vm, selectLocation)
        
        Column(Modifier.weight(0.5f)) {
-           
+           val hives = vm.allHives.observeAsState().value
+
+
+
+           LazyColumn() {
+
+               items(hives?: listOf(),){
+                   MyHiveItem(
+                       isMyHiveScreen = true,
+                       hive = it, onAddClick = { vm.updateHive(it.copy(isCollect = true)) })
+                   {
+
+                       selectLocation.position = CameraPosition.fromLatLngZoom(LatLng(it.latitude, it.longitude), 10f)
+
+
+
+                   }
+               }
+
+           }
        }
    }
 

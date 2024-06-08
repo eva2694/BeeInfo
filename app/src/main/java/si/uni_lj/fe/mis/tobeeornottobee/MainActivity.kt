@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,13 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.mis.tobeeornottobee.data.retrofit.ClientData
 import si.uni_lj.fe.mis.tobeeornottobee.data.retrofit.RetrofitInstance
 import si.uni_lj.fe.mis.tobeeornottobee.navigate.AppNavHost
-import si.uni_lj.fe.mis.tobeeornottobee.ui.theme.ToBeeOrNotToBeeTheme
 
 
 @AndroidEntryPoint
@@ -41,7 +42,9 @@ class MainActivity : ComponentActivity() {
                 // Fetch data from the API
                 val clientData = RetrofitInstance.api.getClientData()
                 // Handle the fetched data
-                handleClientData(clientData)
+                handleClientData(
+
+                    clientData)
             } catch (e: Exception) {
                 // Handle exceptions, such as network errors
                 e.printStackTrace()
@@ -53,9 +56,12 @@ class MainActivity : ComponentActivity() {
         if (currentTime<savedTime)
             sharedPreferences.edit().putLong("time", currentTime).apply()
 
+
+
+
         checkPermissions()
         setContent {
-            ToBeeOrNotToBeeTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -74,6 +80,7 @@ class MainActivity : ComponentActivity() {
 
     private fun handleClientData(clientData: ClientData) {
         toast(clientData.toString())
+        Log.d("ClientData", clientData.toString())
     }
 
 
@@ -82,65 +89,72 @@ class MainActivity : ComponentActivity() {
     private fun Context.toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
-
-    private fun checkPermissions(){
-        if (!checkBtPermission()){
+    private fun checkPermissions() {
+        if (!checkBtPermission() || !checkStoragePermission()) {
             registerPermissionListener()
             launchBtPermissions()
         }
     }
 
-    private fun launchBtPermissions(){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
-            pLauncher.launch(
-                arrayOf(
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.CAMERA
-
-                )
-            )
-        }else{
-            pLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.CAMERA
-
-                )
-            )
+    private fun launchBtPermissions() {
+        val permissions = mutableListOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE, // Add storage permission
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
         }
-
+        pLauncher.launch(permissions.toTypedArray())
     }
 
-    private fun registerPermissionListener(){
+    private fun registerPermissionListener() {
         pLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ){
-
+        ) { permissions ->
+            // Handle permission results here
+            val allGranted = permissions.all { it.value }
+            if (allGranted) {
+                // All permissions granted, proceed with your logic
+            } else {
+                // Some permissions denied, handle accordingly
+            }
         }
-
-
     }
-    fun checkBtPermission(): Boolean{
-        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED
 
+    private fun checkBtPermission(): Boolean {
+        val hasFineLocation = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val hasCamera = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
 
-        }else{
-            ContextCompat.checkSelfPermission(
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val hasBluetoothConnect = ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED
-
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+            hasFineLocation && hasBluetoothConnect && hasCamera
+        } else {
+            hasFineLocation && hasCamera
         }
+    }
+
+    private fun checkStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED && checkWriteStoragePermission()
+    }
+    private fun checkWriteStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }
 
@@ -159,7 +173,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    ToBeeOrNotToBeeTheme {
+    AppTheme  {
         Greeting("Android")
     }
 }

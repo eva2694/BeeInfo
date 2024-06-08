@@ -12,10 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.compose.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.study.funFactScreen.FunFactsScreen
-import si.uni_lj.fe.mis.tobeeornottobee.ui.theme.ToBeeOrNotToBeeTheme
 
 
 @SuppressLint("CustomSplashScreen")
@@ -24,7 +24,7 @@ class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ToBeeOrNotToBeeTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -51,7 +51,5 @@ class SplashActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview2() {
-    ToBeeOrNotToBeeTheme {
        // Greeting2("Android")
-    }
 }

@@ -13,6 +13,7 @@ import androidx.core.graphics.drawable.toBitmap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
@@ -21,7 +22,8 @@ import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
 import si.uni_lj.fe.mis.tobeeornottobee.R
 
 @Composable
-fun MyMap(modifier: Modifier = Modifier, vm: MainViewModel) {
+fun MyMap(modifier: Modifier = Modifier, vm: MainViewModel,
+          cameraPosition: CameraPositionState?= null) {
 
 
     val hivesLocation =vm.allHives.observeAsState().value
@@ -31,9 +33,17 @@ fun MyMap(modifier: Modifier = Modifier, vm: MainViewModel) {
 
     val singapore = LatLng(/* latitude = */ 1.35,  /* longitude = */ 103.87)
 
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 2f)
-    }
+    val cameraPositionState =
+        cameraPosition
+            ?: if (hivesLocation.isNullOrEmpty())
+                rememberCameraPositionState {
+                    position = CameraPosition.fromLatLngZoom(singapore, 2f)
+                }
+            else
+                rememberCameraPositionState {
+                    position = CameraPosition.fromLatLngZoom(LatLng(hivesLocation.first().latitude, hivesLocation.first().longitude), 2f)
+                }
+
     val markerOn = ResourcesCompat.getDrawable(context.resources, R.drawable.twotone_location_on_24, null)?.toBitmap()
     val markerOff = ResourcesCompat.getDrawable(context.resources, R.drawable.twotone_location_off_24, null)?.toBitmap()
 

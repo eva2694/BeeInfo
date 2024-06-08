@@ -66,6 +66,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.datastore:datastore-preferences:1.1.1") // Replace with the latest version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
 
     implementation("com.squareup.okhttp3:okhttp")
@@ -74,6 +75,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     //grafic
     implementation("co.yml:ycharts:2.1.0")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
     //
 
     //camera

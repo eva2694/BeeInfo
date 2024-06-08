@@ -7,12 +7,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,12 +27,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import si.uni_lj.fe.mis.tobeeornottobee.MainViewModel
+import si.uni_lj.fe.mis.tobeeornottobee.R
 import si.uni_lj.fe.mis.tobeeornottobee.screens.HomeScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.HiveScreen
 import si.uni_lj.fe.mis.tobeeornottobee.screens.tabs.addHiveScreens.cmera.AddQrScanScreen
@@ -77,31 +77,38 @@ fun TabNavHost(inTabNavigation: NavHostController) {
     var topBarState by remember {
         mutableStateOf(false)
     }
+    var searchText by remember { mutableStateOf("") }  // State to hold the text field value
+
 
     Scaffold(
         topBar = {
-                 AnimatedVisibility(topBarState){
-                     TopAppBar(title = { }, actions = {
-                         NavigationBarItem(
-                             selected = selectedTopTab==1,
-                             onClick = {
-                                 inTabNavigation.navigate(TabNavRote.AddMapScreen.rote)
-                                 selectedTopTab =1 },
-                             icon = { Icon(Icons.Default.LocationOn, contentDescription ="" ) })
-                         NavigationBarItem(
-                             selected = selectedTopTab==2,
-                             onClick = { selectedTopTab =2
-                                 inTabNavigation.navigate(TabNavRote.AddQrScanScreen.rote)
-                                       },
-                             icon = { Icon(Icons.TwoTone.Home, contentDescription ="" ) })
-                         NavigationBarItem(
-                             selected = selectedTopTab==3,
-                             onClick = { selectedTopTab =3
-                                 inTabNavigation.navigate(TabNavRote.AddListScreen.rote)
-                             },
-                             icon = { Icon(Icons.Default.Search, contentDescription ="" ) })
-                     })
-                 }
+
+            TopAppBar({
+                AnimatedVisibility(topBarState){
+                    TopAppBar(title = { }, actions = {
+                        NavigationBarItem(
+                            selected = selectedTopTab==1,
+                            onClick = {
+                                inTabNavigation.navigate(TabNavRote.AddMapScreen.rote)
+                                selectedTopTab =1 },
+                            icon = { Icon(Icons.Default.LocationOn, contentDescription ="" ) })
+                        NavigationBarItem(
+                            selected = selectedTopTab==2,
+                            onClick = { selectedTopTab =2
+                                inTabNavigation.navigate(TabNavRote.AddQrScanScreen.rote)
+                            },
+                            icon = { Icon(ImageVector.vectorResource(R.drawable.baseline_qr_code_scanner_24), contentDescription ="" ) })
+                        NavigationBarItem(
+                            selected = selectedTopTab==3,
+                            onClick = { selectedTopTab =3
+                                inTabNavigation.navigate(TabNavRote.AddListScreen.rote)
+                            },
+                            icon = { Icon(Icons.Default.Search, contentDescription ="" ) })
+                    })
+                }
+
+            })
+
 
         },
         bottomBar = {
@@ -113,10 +120,10 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                     selectedBottomTab=1
                     topBarState = false
                     inTabNavigation.navigate(TabNavRote.QuizScreen.rote)
-                              }, icon = { Icon(
-                    Icons.Filled.ThumbUp,
-                    contentDescription = ""
-                ) },
+                              },
+                    icon = { Icon(ImageVector.vectorResource(id = R.drawable.book_icon), contentDescription ="" )
+
+                 },
                     label = {
                         Text(text = "quiz")
                     })
@@ -129,10 +136,8 @@ fun TabNavHost(inTabNavigation: NavHostController) {
                     selectedBottomTab=2
                     inTabNavigation.navigate(TabNavRote.ProfileScreen.rote)
 
-                }, icon = { Icon(
-                    Icons.Default.AccountCircle,
-                    contentDescription = ""
-                ) },
+                },                    icon = { Icon(ImageVector.vectorResource(id = R.drawable.home_icon), contentDescription ="" )
+                },
                     label = { Text(text = "account")})
             }
         },
